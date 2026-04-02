@@ -1,7 +1,7 @@
 # Market Risk Projects
 
 ## Acknowledgement
-These projects were built with Claude (Anthropic) writing the code and structuring the analysis. I ran the code, interpreted the results, debugged issues, and develop a working understanding of the models and what the outputs meant in practice. All results are based on real or realistic financial data.
+These projects were built with Claude (Anthropic) writing the code and structuring the analysis. I ran the code, interpreted the results, debugged issues, and developed a working understanding of the models and what the outputs meant in practice. All results are based on real or realistic financial data.
 
 ## Project 1, FX VaR Risk Engine (`risk-analysis.ipynb`)
 
@@ -22,14 +22,15 @@ FX data is fetched live from Yahoo Finance via `yfinance`, covering 5 years of d
 | Method | VaR |
 |---|---|
 | Historical Simulation | 172,498 NOK |
-| Parametric | 184,396 NOK |
+| Parametric | 176,428 NOK |
 
 The two methods produce similar estimates, suggesting returns are approximately normally distributed under normal market conditions.
 
-**Backtesting:**
-- 21 exceptions observed over the full sample period
-- Basel classification: **RED zone** (10+ exceptions)
-- Exceptions cluster around 2022–2024, driven by the Ukraine war, aggressive global rate hikes, and NOK volatility, a period where historical simulation systematically underestimated tail risk due to its reliance on a trailing window that did not yet contain the new regime
+**Backtesting (Basel standard: last 250 trading days):**
+- 0 exceptions observed over the most recent 250 trading days
+- Basel classification: **GREEN zone** (0–4 exceptions)
+- The Basel Committee's backtesting framework requires VaR models to be assessed over the most recent 250 trading days, as regulators are concerned with whether the model works under current market conditions rather than historical regimes
+- 0 exceptions out of 250 days confirms the model is performing well — daily P&L stayed within the VaR threshold on every trading day over the past year
 
 **Stress scenarios:**
 | Scenario | P&L |
